@@ -1,0 +1,24 @@
+PocketEval Data Use Notice
+
+The PocketEval data package contains structural, affinity and metadata content
+derived from HiQBind, together with MaSIF-derived surface descriptors and the
+released Pocket split annotations.
+
+HiQBind is distributed under the MIT License and is available at
+<https://github.com/THGLab/HiQBind>. The underlying protein and ligand structures
+originate from the Protein Data Bank and the binding measurements from the
+sources curated by the HiQBind workflow (Binding MOAD, BindingDB and BioLiP).
+Those upstream records remain subject to the terms of their original
+distributions; this notice does not grant additional rights to redistribute,
+sell or commercially exploit them.
+
+The MaSIF-derived representations were produced with the publicly released MaSIF
+implementation (<https://github.com/LPDI-EPFL/masif>) and remain subject to the
+terms of the MaSIF software and of the structures they were computed from.
+
+The Pocket split annotations and the scripts developed specifically for
+PocketEval may be reused for research and benchmarking purposes, provided that
+PocketEval and the associated publication are cited.
+
+The data and derived representations are provided for research use without
+warranty.

@@ -1,0 +1,92 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>PocketEval Detail</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Space+Grotesk:wght@400;500;700&display=swap"
+      rel="stylesheet"
+    />
+        <link rel="stylesheet" href="/static/styles.css" />
+    <script src="/static/vendor/3Dmol-min.js"></script>
+  </head>
+  <body>
+    <div class="detail-page-shell">
+      <header class="detail-topbar">
+        <a class="back-link" href="/">Back to Browser</a>
+        <div class="detail-topbar-copy">
+          <p class="eyebrow">PocketEval Detail</p>
+          <h1 id="detail-page-title">Loading pocket...</h1>
+          <p id="detail-page-subtitle" class="lede">
+            Pocket-centric 3D inspection, embedding download, ligand descriptors, and linked bioactivity summaries.
+          </p>
+        </div>
+      </header>
+
+      <section class="detail-viewer-grid">
+        <article class="panel viewer-card viewer-card-wide">
+          <div class="section-head">
+            <h2>3D Structure</h2>
+            <p>Interactive 3D inspection of the released pocket entry and its associated structural files.</p>
+          </div>
+          <div class="viewer-toolbar detail-viewer-toolbar">
+            <button data-kind="surface" class="viewer-button active">Pocket Surface</button>
+            <button data-kind="complex" class="viewer-button">Pocket Complex</button>
+            <button data-kind="ligand" class="viewer-button">Ligand</button>
+          </div>
+          <div id="detail-viewer-status" class="viewer-status hidden"></div>
+          <div id="structure-viewer" class="detail-molstar-viewer"></div>
+        </article>
+      </section>
+
+      <section class="detail-main-grid detail-main-grid-wide">
+        <article class="panel info-card">
+          <div class="section-head">
+            <h2>Metadata</h2>
+            <p>Core structure metadata, downloadable files, and computed ligand descriptors.</p>
+          </div>
+          <div id="detail-asset-links" class="asset-links"></div>
+          <div class="info-stack">
+            <div>
+              <h3>Structure And Embedding</h3>
+              <dl id="detail-metadata" class="meta-list"></dl>
+            </div>
+            <div>
+              <h3>Ligand Properties</h3>
+              <dl id="detail-ligand-properties" class="meta-list"></dl>
+            </div>
+          </div>
+        </article>
+
+        <article class="panel info-card">
+          <div class="section-head">
+            <h2>Bioactivity</h2>
+            <p>Ligand-linked bioactivity evidence and standardized potency summaries for this pocket.</p>
+          </div>
+          <div id="detail-activity-summary" class="activity-summary"></div>
+          <div id="detail-activity-breakdown" class="type-breakdown"></div>
+          <div class="table-wrap compact">
+            <table>
+              <thead>
+                <tr>
+                  <th>Type</th>
+                  <th>Relation</th>
+                  <th>Value</th>
+                  <th>Unit</th>
+                  <th>pX</th>
+                </tr>
+              </thead>
+              <tbody id="detail-activity-body"></tbody>
+            </table>
+          </div>
+        </article>
+      </section>
+    </div>
+    <script src="/static/detail.js"></script>
+  </body>
+</html>
+
+

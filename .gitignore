@@ -1,0 +1,14 @@
+# Large release data are distributed separately from the code repository.
+archive.tar.gz
+# Data packages are intentionally excluded from this code repository.
+resource_bundle/
+
+# Runtime and generated files.
+__pycache__/
+*.pyc
+logs/
+pocketeval-web-*.log
+pocket-web.pid
+dist/
+server_smoke.*
+archive_members*.txt

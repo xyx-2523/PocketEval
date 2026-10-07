@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>PocketEval</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Space+Grotesk:wght@400;500;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="/static/styles.css" />
+    <script src="https://cdn.plot.ly/plotly-2.35.2.min.js"></script>
+  </head>
+  <body>
+    <div class="page-shell">
+      <header class="hero">
+        <div class="hero-copy">
+          <p class="eyebrow">PocketEval Web Resource</p>
+          <h1>Pocket-level structures, MaSIF embeddings, and released benchmark annotations in one browser.</h1>
+          <p class="lede">
+            PocketEval exposes pocket-level protein-ligand entries derived from HiQBind, together with MaSIF-based representations,
+            released benchmark split annotations, structure visualization, and downloadable resource files.
+          </p>
+        </div>
+        <div class="hero-side">
+          <div class="hero-badge">
+            <span class="badge badge-ok">Released Split Online</span>
+            <span class="badge badge-info">Pocket Browser</span>
+          </div>
+          <div class="hero-actions">
+            <a class="action-button" href="/static/index.html#downloads">View Downloads</a>
+          </div>
+        </div>
+      </header>
+
+      <section class="summary-grid" id="summary-grid"></section>
+
+      <section class="status-panel">
+        <div class="section-head">
+          <h2>Resource Overview</h2>
+          <p>PocketEval organizes released pocket entries, benchmark annotations, and downloadable structural assets in a unified web resource.</p>
+        </div>
+        <div class="status-grid" id="status-grid"></div>
+        <div class="quality-grid" id="quality-grid"></div>
+      </section>
+
+      <section class="status-panel" id="downloads">
+        <div class="section-head">
+          <h2>Downloads and Resource Notes</h2>
+          <p>The current release exposes pocket-level records, 80D MaSIF patch descriptors, and the fixed Pocket split annotation for reuse.</p>
+        </div>
+        <div class="quality-grid">
+          <article class="quality-card">
+            <h3>Benchmark File</h3>
+            <p>The released benchmark table provides explicit train, validation, and test labels for pocket-level evaluation.</p>
+            <a class="pocket-link" href="/api/benchmark-file">Download released benchmark CSV</a>
+          </article>
+          <article class="quality-card">
+            <h3>Pocket Records</h3>
+            <p>Each pocket entry links to downloadable structure files and its corresponding fixed-length MaSIF embedding.</p>
+            <span class="subtle">Downloads are available from each pocket detail page.</span>
+          </article>
+          <article class="quality-card">
+            <h3>Resource Scope</h3>
+            <p>PocketEval is organized around HiQBind-derived pocket entries, released split labels, and pocket-level structural inspection.</p>
+            <span class="subtle">No registration is required for browsing the released resource.</span>
+          </article>
+        </div>
+      </section>
+
+      <section class="viz-grid">
+        <article class="panel">
+          <div class="section-head">
+            <h2>Embedding Space</h2>
+            <p>Each point corresponds to one pocket projected from the current MaSIF embedding output.</p>
+          </div>
+          <div id="embedding-plot" class="plot"></div>
+        </article>
+
+        <article class="panel">
+          <div class="section-head">
+            <h2>Released Benchmark Split</h2>
+            <p>The current PocketEval release distributes the fixed 80D MaSIF geometry-aware Pocket split.</p>
+          </div>
+          <div id="split-summary" class="split-summary"></div>
+          <div id="split-plot" class="plot"></div>
+        </article>
+      </section>
+
+      <section class="browser-grid">
+        <article class="panel browser-panel">
+          <div class="section-head">
+            <h2>Dataset Browser</h2>
+            <p>Search by pocket id, PDB id, ligand code, cluster, or released split label, and navigate directly to downloadable pocket records.</p>
+          </div>
+          <div class="browser-controls">
+            <input id="search-input" placeholder="Search pocket, PDB, ligand" />
+            <select id="cluster-filter">
+              <option value="all">All clusters</option>
+            </select>
+            <select id="split-filter">
+              <option value="all">All split labels</option>
+              <option value="train">Train</option>
+              <option value="val">Validation</option>
+              <option value="test">Test</option>
+            </select>
+            <select id="affinity-filter">
+              <option value="all" selected>All affinity states</option>
+              <option value="with_affinity">Has recorded affinity</option>
+              <option value="without_affinity">No recorded affinity</option>
+            </select>
+            <select id="activity-filter">
+              <option value="all">All pockets</option>
+              <option value="active">Activity mapped</option>
+              <option value="standardized">Standardized activity</option>
+              <option value="high_quality">High-quality preview</option>
+            </select>
+            <button id="search-button">Search</button>
+          </div>
+          <div id="result-meta" class="result-meta"></div>
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th>Pocket</th>
+                  <th>PDB</th>
+                  <th>Ligand</th>
+                  <th>Cluster</th>
+                  <th>Split</th>
+                  <th>Activity</th>
+                  <th>pX</th>
+                </tr>
+              </thead>
+              <tbody id="browser-body"></tbody>
+            </table>
+          </div>
+          <div class="pager">
+            <button id="prev-page">Prev</button>
+            <span id="page-label">Page 1</span>
+            <button id="next-page">Next</button>
+          </div>
+        </article>
+      </section>
+    </div>
+    <script src="/static/app.js"></script>
+  </body>
+</html>
