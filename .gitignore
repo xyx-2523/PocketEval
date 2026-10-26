@@ -9,6 +9,7 @@ __pycache__/
 logs/
 pocketeval-web-*.log
 pocket-web.pid
+screenshots/
 dist/
 server_smoke.*
 archive_members*.txt

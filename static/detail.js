@@ -1,4 +1,4 @@
-﻿const pocketId = decodeURIComponent(window.location.pathname.split("/pocket/")[1] || "").trim();
+const pocketId = decodeURIComponent(window.location.pathname.split("/pocket/")[1] || "").trim();
 
 const state = {
   pocketId,
@@ -321,7 +321,7 @@ async function renderStructure(kind) {
         { hetflag: true },
         { stick: { radius: 0.2, colorscheme: "default" } }
       );
-      viewer.zoomTo({ hetflag: true });
+      viewer.zoomTo();
     }
     syncViewerSize(viewer);
     viewer.render();
