@@ -151,7 +151,7 @@ class PocketStore:
             {
                 "title": "Embedding Space Analysis",
                 "state": "implemented",
-                "detail": "Released projection and clustering annotations are available for embedding-space browsing.",
+                "detail": "Released projection annotations are available for embedding-space browsing.",
             },
             {
                 "title": "Geometry-Aware Split",

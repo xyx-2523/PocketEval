@@ -93,13 +93,10 @@
         <article class="panel browser-panel">
           <div class="section-head">
             <h2>Dataset Browser</h2>
-            <p>Search by pocket id, PDB id, ligand code, cluster, or released split label, and navigate directly to downloadable pocket records.</p>
+            <p>Search by pocket id, PDB id, ligand code, or released split label, and navigate directly to downloadable pocket records. Example records: <a href="/pocket/10gs_VWW_A_210">10gs_VWW_A_210</a> · <a href="/pocket/1a30_GLU-LEU_C_506-508">1a30_GLU-LEU_C_506-508</a>.</p>
           </div>
           <div class="browser-controls">
             <input id="search-input" placeholder="Search pocket, PDB, ligand" />
-            <select id="cluster-filter">
-              <option value="all">All clusters</option>
-            </select>
             <select id="split-filter">
               <option value="all">All split labels</option>
               <option value="train">Train</option>
@@ -127,7 +124,6 @@
                   <th>Pocket</th>
                   <th>PDB</th>
                   <th>Ligand</th>
-                  <th>Cluster</th>
                   <th>Split</th>
                   <th>Activity</th>
                   <th>pX</th>

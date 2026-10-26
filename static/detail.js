@@ -103,7 +103,6 @@ function renderMetadata(record) {
     ["Ligand", ligand.resname],
     ["Chain", ligand.chain_id],
     ["Residue Number", ligand.resseq],
-    ["Cluster", cluster.cluster_label],
     ["Projection", `${formatNullableNumber(coords[0])}, ${formatNullableNumber(coords[1])}`],
     ["Protein Residues", record.protein_residue_count],
     ["Patch Count", record.embedding?.patch_count],
@@ -355,13 +354,13 @@ async function bootstrap() {
   state.activity = activity;
 
   elements.title.textContent = `${record.pocket_id} · ${record.pdb_id}`;
-  elements.subtitle.textContent = `Ligand ${record.ligand?.resname || "-"} · Cluster ${record.cluster?.cluster_label ?? "-"} · Pocket-centric structure and activity detail`;
+  elements.subtitle.textContent = `Ligand ${record.ligand?.resname || "-"} · Pocket-centric structure and activity detail`;
 
   renderMetadata(record);
   renderLigandProperties(record);
   renderAssetLinks(record);
   renderActivity(activity);
-  await renderStructure("surface");
+  await renderStructure("complex");
 }
 
 elements.viewerButtons.forEach((button) => {

@@ -19,7 +19,6 @@ const elements = {
   splitPlot: document.getElementById("split-plot"),
   splitSummary: document.getElementById("split-summary"),
   searchInput: document.getElementById("search-input"),
-  clusterFilter: document.getElementById("cluster-filter"),
   splitFilter: document.getElementById("split-filter"),
   affinityFilter: document.getElementById("affinity-filter"),
   activityFilter: document.getElementById("activity-filter"),
@@ -92,7 +91,6 @@ function renderSummary(summary) {
     ["Pocket Instances", formatInteger(summary.total_pockets), "tone-orange", "All embedded pockets in the current index"],
     ["Unique PDB Entries", formatInteger(summary.total_pdb_entries), "tone-blue", "Distinct structures represented by pockets"],
     ["Ligand Codes", formatInteger(summary.unique_ligand_codes), "tone-green", "Unique three-letter ligand identifiers"],
-    ["Clusters", formatInteger(summary.cluster_count), "tone-red", "Cluster labels loaded from the projection file"],
     [`${summary.released_split_name || "Released"} Train`, formatInteger(splitCounts.train), "tone-blue", "Entries assigned to the released training split"],
     [`${summary.released_split_name || "Released"} Validation`, formatInteger(splitCounts.val), "tone-orange", "Entries assigned to the released validation split"],
     [`${summary.released_split_name || "Released"} Test`, formatInteger(splitCounts.test), "tone-red", "Entries assigned to the released test split"],
@@ -173,11 +171,9 @@ function renderEmbeddingPlot(points) {
     type: "scattergl",
     marker: {
       size: points.map((item) => (item.has_high_quality_activity ? 8 : 6)),
-      color: points.map((item) => item.cluster_label ?? -1),
-      colorscale: "Turbo",
-      opacity: 0.74,
-      showscale: true,
-      colorbar: { title: "Cluster" },
+      color: "#1864ab",
+      opacity: 0.6,
+      showscale: false,
       line: {
         color: points.map((item) => (item.has_high_quality_activity ? "#7c2d12" : "rgba(0,0,0,0)")),
         width: points.map((item) => (item.has_high_quality_activity ? 1.4 : 0)),
@@ -186,7 +182,7 @@ function renderEmbeddingPlot(points) {
     hovertemplate: "%{text}<extra></extra>",
   };
 
-  Plotly.newPlot(elements.embeddingPlot, [trace], plotLayout("Cluster-colored embedding space"), plotConfig());
+  Plotly.newPlot(elements.embeddingPlot, [trace], plotLayout("Embedding space"), plotConfig());
   elements.embeddingPlot.on("plotly_click", (event) => {
     const pocketId = event.points?.[0]?.customdata;
     if (pocketId) {
@@ -292,12 +288,11 @@ function formatPocketFlags(item) {
 
 async function loadBrowser() {
   const search = encodeURIComponent(elements.searchInput.value.trim());
-  const cluster = encodeURIComponent(elements.clusterFilter.value);
   const split = encodeURIComponent(elements.splitFilter.value);
   const affinity = encodeURIComponent(elements.affinityFilter.value);
   const activity = encodeURIComponent(elements.activityFilter.value);
   const payload = await fetchJson(
-    `/api/pockets?q=${search}&cluster=${cluster}&split=${split}&affinity=${affinity}&activity=${activity}&page=${state.page}&page_size=${state.pageSize}`
+    `/api/pockets?q=${search}&split=${split}&affinity=${affinity}&activity=${activity}&page=${state.page}&page_size=${state.pageSize}`
   );
   state.total = payload.total;
   elements.browserBody.innerHTML = "";
@@ -312,7 +307,6 @@ async function loadBrowser() {
       <td><a class="pocket-link" href="/pocket/${encodeURIComponent(item.pocket_id)}">${item.pocket_id}</a></td>
       <td>${item.pdb_id}</td>
       <td>${item.ligand_resname || "-"}</td>
-      <td>${item.cluster_label ?? "-"}</td>
       <td>${item.split || "-"}</td>
       <td>${formatPocketFlags(item)} <span class="inline-mono">${formatInteger(item.activity_total_count)}</span></td>
       <td>${item.max_px !== null && item.max_px !== undefined ? formatNullableNumber(item.max_px) : "-"}</td>
@@ -327,16 +321,6 @@ async function loadBrowser() {
   }
 }
 
-function populateClusterFilter(points) {
-  const labels = Array.from(new Set(points.map((item) => item.cluster_label).filter((item) => item !== null))).sort((a, b) => a - b);
-  for (const label of labels) {
-    const option = document.createElement("option");
-    option.value = String(label);
-    option.textContent = `Cluster ${label}`;
-    elements.clusterFilter.appendChild(option);
-  }
-}
-
 async function bootstrap() {
   const [summary, status, points, qualityInfo] = await Promise.all([
     fetchJson("/api/summary"),
@@ -348,7 +332,6 @@ async function bootstrap() {
   renderSummary(summary);
   renderStatus(status.items);
   renderQualityInfo(qualityInfo.items);
-  populateClusterFilter(state.points);
   renderEmbeddingPlot(state.points);
   renderSplitPlot(state.points);
   await loadBrowser();
@@ -363,10 +346,6 @@ elements.searchInput.addEventListener("keydown", async (event) => {
     state.page = 1;
     await loadBrowser();
   }
-});
-elements.clusterFilter.addEventListener("change", async () => {
-  state.page = 1;
-  await loadBrowser();
 });
 elements.splitFilter.addEventListener("change", async () => {
   state.page = 1;
