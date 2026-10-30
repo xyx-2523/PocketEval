@@ -11,6 +11,20 @@ tags:
   - benchmark
   - MaSIF
   - binding-pocket
+configs:
+  - config_name: pockets
+    default: true
+    data_files:
+      - split: train
+        path: dataset_index.json
+  - config_name: clusters
+    data_files:
+      - split: train
+        path: cluster_assignments.json
+  - config_name: benchmark
+    data_files:
+      - split: train
+        path: benchmark_pocket_split.csv
 ---
 
 # PocketEval — HiQBind pocket-level benchmark
@@ -34,6 +48,12 @@ relatedness.
 | `summary.json` | 0.5 kB | dataset-level counts |
 | `pocket_structures.tar.gz` | **1.9 GB** | per-pocket `pocket_protein.pdb`, `ligand.sdf`, `ligand.pdb`, `metadata.json` and the 80-dim `embeddings/<pocket_id>.npy` |
 | `SHA256SUMS.txt` | 0.5 kB | checksums for the files above |
+
+> **Preview.** The three tabular files are independent tables, not splits of one
+> dataset, so the card declares one viewer *config* per table (`pockets`,
+> `clusters`, `benchmark`). `summary.json` is dataset-level metadata, not a table.
+> `benchmark_pocket_split.csv` carries the released partition in its own `split`
+> column.
 
 ## Getting started
 
